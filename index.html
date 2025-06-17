@@ -163,15 +163,20 @@
                     <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Our go-to-market product embodies our core values. It's not just another smartphone; it's a statement.</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
-                    <div class="grid md:grid-cols-3 gap-8">
+                    <div class="grid md:grid-cols-3 gap-12">
                         <div class="md:col-span-1 flex flex-col items-center text-center">
-                            <div class="w-40 h-80 bg-slate-900 rounded-3xl p-2 border-4 border-slate-700 flex flex-col">
-                                <div class="w-12 h-2 bg-slate-800 rounded-full mx-auto"></div>
-                                <div class="flex-grow bg-slate-100 rounded-xl mt-2 flex items-center justify-center">
-                                    <div class="text-5xl font-bold text-slate-800">D<span class="text-orange-500">14</span></div>
+                            <div class="w-48 h-96 bg-slate-100 rounded-3xl shadow-2xl flex flex-col p-4">
+                                <div class="flex-grow flex flex-col items-center justify-center text-slate-800">
+                                    <div class="text-4xl mb-4">📞</div>
+                                    <p class="font-semibold">Incoming Call...</p>
+                                    <p class="text-2xl font-bold mt-2">(479) 273-4000</p>
+                                </div>
+                                <div class="flex justify-around items-center w-full mt-4">
+                                    <button class="w-16 h-16 bg-red-500 text-white text-3xl rounded-full flex items-center justify-center shadow-lg">❌</button>
+                                    <button class="w-16 h-16 bg-green-500 text-white text-3xl rounded-full flex items-center justify-center shadow-lg">✔️</button>
                                 </div>
                             </div>
-                            <h3 class="text-2xl font-bold mt-6">The Phone</h3>
+                             <h3 class="text-2xl font-bold mt-6">The Phone</h3>
                             <p class="text-slate-500">Generation 1</p>
                         </div>
                         <div id="feature-display" class="md:col-span-2">
@@ -408,30 +413,31 @@
             // Interactive Timeline
             const timelineItems = document.querySelectorAll('.timeline-item');
             
-            function updateTimelineView(activeIndexToSet) {
+            function setTimelineView(activeIndex) {
                 timelineItems.forEach((item, index) => {
                     const circle = item.querySelector('.timeline-circle');
-                    if (index === activeIndexToSet) {
+                    if (index === activeIndex) {
                         item.classList.add('active');
-                        circle.classList.remove('bg-white', 'border-slate-300');
                         circle.classList.add('bg-orange-500', 'border-orange-500');
+                        circle.classList.remove('border-slate-300');
                     } else {
                         item.classList.remove('active');
                         circle.classList.remove('bg-orange-500', 'border-orange-500');
-                        circle.classList.add('bg-white', 'border-slate-300');
+                        circle.classList.add('border-slate-300');
                     }
                 });
             }
 
             timelineItems.forEach((item, index) => {
-                item.addEventListener('click', () => {
-                    updateTimelineView(index);
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setTimelineView(index);
                 });
             });
             
-            // Open the first item by default
+            // Set initial view on page load
             if (timelineItems.length > 0) {
-                updateTimelineView(0);
+                setTimelineView(0);
             }
             
             // Product Features
