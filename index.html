@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D14: The Future of Personal Technology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Slate -->
+    <!-- Application Structure Plan: A single-page, top-down narrative structure is used to guide the user (e.g., an investor) through the D14 story. It starts with the high-level vision, moves to the market opportunity, details the product solution, outlines the execution plan (with interactive timeline and budget), and concludes with future growth. This flow mirrors a standard pitch deck, making it intuitive and persuasive. Key interactions include an interactive timeline to explore the 12-month plan and a dynamic donut chart for the budget, which allows users to engage with the data rather than just read it. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: $20M Budget Allocation -> Goal: Inform Proportions -> Viz: Donut Chart -> Interaction: Hover to see details on each slice -> Justification: Provides a quick, clear visual breakdown of financial strategy -> Library: Chart.js (Canvas).
+        - Report Info: 12-Month Go-to-Market Plan -> Goal: Show Change/Process -> Viz: Interactive HTML/CSS Timeline -> Interaction: Click on a phase to reveal milestones -> Justification: Makes the project plan digestible and less overwhelming than a long text list, encouraging exploration.
+        - Report Info: Core Philosophy & Product Features -> Goal: Organize/Inform -> Viz: Interactive Cards/Tabs -> Interaction: Click to reveal descriptive text -> Justification: Enhances user engagement by letting them pull information as needed, creating a cleaner initial view.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #fd7e14;
+        }
+        .timeline-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .timeline-item.active .timeline-item-content {
+            max-height: 500px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-slate-900">
+                D<span class="text-orange-500">14</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#vision" class="nav-link text-slate-600 font-medium">The Vision</a>
+                <a href="#opportunity" class="nav-link text-slate-600 font-medium">The Opportunity</a>
+                <a href="#product" class="nav-link text-slate-600 font-medium">The Product</a>
+                <a href="#plan" class="nav-link text-slate-600 font-medium">The Plan</a>
+                <a href="#future" class="nav-link text-slate-600 font-medium">The Future</a>
+            </div>
+             <a href="mailto:j@longstory.sh" class="hidden md:block bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+                Contact Joe
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">Challenging the <span class="text-orange-500">Everyday</span>.</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">We're D14, a new U.S.-based technology lab. We're not just engineering devices, we're cooking up a simpler, more secure future, starting with The Phone.</p>
+                <div class="mt-8 flex justify-center gap-4">
+                    <a href="#plan" class="bg-slate-900 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-800 transition-colors">See The Plan</a>
+                    <a href="#product" class="bg-white text-slate-900 font-bold py-3 px-6 rounded-lg border-2 border-slate-200 hover:bg-slate-100 transition-colors">Explore The Phone</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="vision" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">The D14 Philosophy: We're Cooking</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Our identity is rooted in the kitchen—a place of creativity, precision, and essential tools. This philosophy guides how we craft technology.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="text-4xl text-orange-500 mb-4">🍳</div>
+                        <h3 class="text-xl font-bold mb-2">Focus on Essentials</h3>
+                        <p class="text-slate-600">A great dish relies on quality ingredients, not unnecessary flair. We build powerful, focused technology, stripping away the bloat that plagues modern devices.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="text-4xl text-orange-500 mb-4">🔪</div>
+                        <h3 class="text-xl font-bold mb-2">Mastery of Craft</h3>
+                        <p class="text-slate-600">Our team consists of masters in their respective fields—design, hardware, and software—working in concert to create a seamless final product.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                         <div class="text-4xl text-orange-500 mb-4">✨</div>
+                        <h3 class="text-xl font-bold mb-2">Taste and Refinement</h3>
+                        <p class="text-slate-600">We are obsessed with the user experience. Every interaction is meticulously "tasted" and refined until it meets our exacting standards of simplicity and elegance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="opportunity" class="bg-white py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">The Opportunity: A $3 Trillion Target</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">The largest opportunity in the market is hiding in plain sight. Apple's very strengths have created vulnerabilities we are poised to address.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div>
+                        <h3 class="text-2xl font-bold text-center mb-6">The Incumbent's Burden</h3>
+                         <div class="space-y-6">
+                             <div class="bg-slate-50 p-6 rounded-lg">
+                                <h4 class="font-bold text-lg">Product Overkill</h4>
+                                <p class="text-slate-600 mt-1">iPhones are bloated with features many users don't need, creating a complex and expensive experience.</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-lg">
+                                <h4 class="font-bold text-lg">Foreign Dependency</h4>
+                                <p class="text-slate-600 mt-1">Reliance on overseas manufacturing creates supply chain risks and a disconnect from the home market.</p>
+                            </div>
+                             <div class="bg-slate-50 p-6 rounded-lg">
+                                <h4 class="font-bold text-lg">Performance vs. Reality</h4>
+                                <p class="text-slate-600 mt-1">Laptop battery life and performance often fall short of real-world needs, despite premium prices.</p>
+                            </div>
+                         </div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-bold text-center mb-6">The D14 Advantage</h3>
+                         <div class="space-y-6">
+                             <div class="bg-orange-500/10 p-6 rounded-lg border-l-4 border-orange-500">
+                                <h4 class="font-bold text-lg text-orange-700">Elegant Simplicity</h4>
+                                <p class="text-slate-600 mt-1">The Phone does what you need, exceptionally well. No bloat, no confusion.</p>
+                            </div>
+                            <div class="bg-orange-500/10 p-6 rounded-lg border-l-4 border-orange-500">
+                                <h4 class="font-bold text-lg text-orange-700">Made in America</h4>
+                                <p class="text-slate-600 mt-1">Ensures quality control, supply chain security, and local support.</p>
+                            </div>
+                             <div class="bg-orange-500/10 p-6 rounded-lg border-l-4 border-orange-500">
+                                <h4 class="font-bold text-lg text-orange-700">Real-World Focus</h4>
+                                <p class="text-slate-600 mt-1">We build devices for how people actually live and work, prioritizing reliability and practicality.</p>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="product" class="py-20 md:py-24">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">The Solution: The Phone</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Our go-to-market product embodies our core values. It's not just another smartphone; it's a statement.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="md:col-span-1 flex flex-col items-center text-center">
+                            <div class="w-40 h-80 bg-slate-900 rounded-3xl p-2 border-4 border-slate-700 flex flex-col">
+                                <div class="w-12 h-2 bg-slate-800 rounded-full mx-auto"></div>
+                                <div class="flex-grow bg-slate-100 rounded-xl mt-2 flex items-center justify-center">
+                                    <div class="text-5xl font-bold text-slate-800">D<span class="text-orange-500">14</span></div>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mt-6">The Phone</h3>
+                            <p class="text-slate-500">Generation 1</p>
+                        </div>
+                        <div id="feature-display" class="md:col-span-2">
+                             <div class="space-y-4">
+                                <button data-feature="simplicity" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📱 Elegant Simplicity</button>
+                                <button data-feature="security" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🛡️ Uncompromising Security & Privacy</button>
+                                <button data-feature="madeinusa" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🇺🇸 Made & Supported in America</button>
+                                <button data-feature="mvno" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📡 MVNO for a Seamless Experience</button>
+                            </div>
+                             <div id="feature-content" class="mt-6 p-6 bg-slate-100 rounded-lg min-h-[120px]">
+                                <h4 id="feature-title" class="text-xl font-bold text-slate-900"></h4>
+                                <p id="feature-text" class="mt-2 text-slate-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="bg-white py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">The 12-Month, $20M Go-to-Market Plan</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">A realistic, phased plan to bring The Phone from concept to consumer.</p>
+                </div>
+                <div class="grid lg:grid-cols-5 gap-12 items-center">
+                    <div class="lg:col-span-3">
+                        <h3 class="text-2xl font-bold mb-8 text-center lg:text-left">Interactive Timeline</h3>
+                        <div class="relative pl-8 border-l-2 border-slate-200">
+                             <div class="timeline-item mb-8" data-phase="1">
+                                <div class="absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-orange-500 rounded-full cursor-pointer flex items-center justify-center font-bold">1</div>
+                                <h4 class="text-xl font-bold cursor-pointer ml-4">Months 1-3: Foundation & Design</h4>
+                                <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Finalize core leadership team of 20 professionals.</li>
+                                        <li>Establish key hardware partnerships and U.S. supply chain.</li>
+                                        <li>Conduct detailed component-level supply chain mapping and audits.</li>
+                                        <li>Lock industrial design, CMF (Color, Material, Finish), and core UX.</li>
+                                        <li>Begin development of D14's customized Android OS layer.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item mb-8" data-phase="2">
+                                <div class="absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full cursor-pointer flex items-center justify-center font-bold">2</div>
+                                <h4 class="text-xl font-bold cursor-pointer ml-4">Months 4-6: Prototyping & Engineering</h4>
+                                <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>First hardware prototype assembly and testing (EVT).</li>
+                                        <li>Alpha software builds deployed for internal testing.</li>
+                                        <li>Core software integration with hardware components.</li>
+                                        <li>Finalize MVNO agreements and build backend infrastructure.</li>
+                                        <li>Refine UX based on internal feedback.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item mb-8" data-phase="3">
+                                <div class="absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full cursor-pointer flex items-center justify-center font-bold">3</div>
+                                <h4 class="text-xl font-bold cursor-pointer ml-4">Months 7-9: Refinement & Pre-Production</h4>
+                                <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Build and test production-ready prototypes (DVT).</li>
+                                        <li>Begin FCC and carrier certification processes.</li>
+                                        <li>Run a closed beta testing program with trusted users for feedback.</li>
+                                        <li>Initiate small-scale U.S. manufacturing runs to validate processes (PVT).</li>
+                                        <li>Develop customer support protocols and training materials.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item" data-phase="4">
+                                 <div class="absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full cursor-pointer flex items-center justify-center font-bold">4</div>
+                                <h4 class="text-xl font-bold cursor-pointer ml-4">Months 10-12: Production & Launch</h4>
+                                <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                     <ul class="list-disc pl-5 space-y-1">
+                                        <li>Scale to full manufacturing production.</li>
+                                        <li>Finalize marketing, branding, and launch strategy.</li>
+                                        <li>Build initial launch inventory and logistics pipeline.</li>
+                                        <li>Execute pre-launch marketing campaign and open pre-orders.</li>
+                                        <li>Official launch of The Phone and the D14 MVNO service.</li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Budget Allocation</h3>
+                        <div class="chart-container">
+                            <canvas id="budgetChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Future Growth Initiatives</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">The launch of The Phone is only the beginning. Our growth will be driven by a relentless focus on our core mission.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <h3 class="text-xl font-bold mb-3">1. D14 OS</h3>
+                        <p class="text-slate-600">Post-launch, we will develop our own proprietary operating system. This will allow for unparalleled security, efficiency, and a truly unique user experience that we control end-to-end.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <h3 class="text-xl font-bold mb-3">2. Local LLMs for All</h3>
+                        <p class="text-slate-600">We will integrate powerful, free, and private on-device Large Language Models (LLMs). True personal intelligence without harvesting user data.</p>
+                    </div>
+                     <div class="bg-white p-8 rounded-xl shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <h3 class="text-xl font-bold mb-3">3. The Laptop</h3>
+                        <p class="text-slate-600">We will expand our product line with a laptop addressing the failings of Apple's offerings, focusing on exceptional battery life and sustained performance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section id="contact" class="bg-slate-900 text-white py-20 md:py-24">
+             <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold">Join Us in Cooking Up the Future.</h2>
+                 <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">D14 is positioned to become the most significant new player in consumer technology. We have the vision, plan, and philosophy to build a better alternative. We invite you to be a part of it.</p>
+                  <div class="mt-8">
+                    <a href="mailto:j@longstory.sh" class="bg-orange-500 text-white font-bold py-4 px-8 rounded-lg hover:bg-orange-600 transition-colors text-lg">Contact Joe</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white py-6">
+        <div class="container mx-auto px-6 text-center text-slate-500">
+            <p>&copy; 2025 D14. All Rights Reserved. Built in the USA.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Budget Chart
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            const budgetData = {
+                labels: [
+                    'Team & Operations ($6M)',
+                    'Hardware R&D & Components ($7M)',
+                    'Software Development ($3M)',
+                    'U.S. Manufacturing ($2M)',
+                    'Marketing, MVNO & Launch ($2M)'
+                ],
+                datasets: [{
+                    label: 'Budget Allocation',
+                    data: [6, 7, 3, 2, 2],
+                    backgroundColor: [
+                        '#fb923c', // orange-400
+                        '#f97316', // orange-500
+                        '#ea580c', // orange-600
+                        '#c2410c', // orange-700
+                        '#9a3412'  // orange-800
+                    ],
+                    borderColor: '#f8f9fa',
+                    borderWidth: 4,
+                    hoverOffset: 12
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: budgetData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += '$' + context.parsed + 'M';
+                                    }
+                                    return label;
+                                }
+                            },
+                            backgroundColor: '#1e293b',
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            padding: 12,
+                            cornerRadius: 8,
+                            displayColors: false,
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            // Interactive Timeline
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            function toggleTimelineItem(item, forceOpen = false) {
+                 timelineItems.forEach(otherItem => {
+                    if(otherItem !== item) {
+                       otherItem.classList.remove('active');
+                       otherItem.querySelector('.absolute').classList.remove('border-orange-500');
+                       otherItem.querySelector('.absolute').classList.add('border-slate-300');
+                    }
+                });
+                item.classList.toggle('active');
+                const icon = item.querySelector('.absolute');
+                if (item.classList.contains('active')) {
+                    icon.classList.add('border-orange-500');
+                    icon.classList.remove('border-slate-300');
+                } else {
+                    icon.classList.remove('border-orange-500');
+                    icon.classList.add('border-slate-300');
+                }
+            }
+
+            timelineItems.forEach(item => {
+                item.querySelector('h4').addEventListener('click', () => toggleTimelineItem(item));
+                item.querySelector('.absolute').addEventListener('click', () => toggleTimelineItem(item));
+            });
+            
+            // Open the first item by default
+            if(timelineItems.length > 0) {
+                const firstItem = timelineItems[0];
+                 firstItem.classList.add('active');
+                 firstItem.querySelector('.absolute').classList.add('border-orange-500');
+                 firstItem.querySelector('.absolute').classList.remove('border-slate-300');
+            }
+            
+            // Product Features
+            const featureButtons = document.querySelectorAll('.feature-btn');
+            const featureTitle = document.getElementById('feature-title');
+            const featureText = document.getElementById('feature-text');
+            const features = {
+                simplicity: {
+                    title: 'Elegant Simplicity',
+                    text: 'Hardware is crafted from premium, durable materials like titanium and ceramic, designed for longevity and repairability. The custom Android OS is stripped of all bloatware, offering a clean, intuitive user experience focused on core communication and productivity tasks.'
+                },
+                security: {
+                    title: 'Uncompromising Security & Privacy',
+                    text: 'Features a hardware-level security chip and a secure boot process to ensure integrity from the ground up. All user data through our MVNO is routed through U.S.-based servers under strict privacy guidelines. We collect only what is essential to provide service, and we never sell user data.'
+                },
+                madeinusa: {
+                    title: 'Made & Supported in America',
+                    text: 'We are partnering with U.S. suppliers for key components, including the SoC and display. Final assembly, quality control, and all customer support are based exclusively in the United States, creating local jobs and ensuring unparalleled oversight.'
+                },
+                mvno: {
+                    title: 'MVNO for a Seamless Experience',
+                    text: 'Our own mobile network provides simple, transparent plans with no hidden fees. Customer support is handled by highly trained, U.S.-based D14 employees, not outsourced call centers. This integration provides a secure, reliable connection optimized for The Phone.'
+                }
+            };
+            
+            function updateFeatureContent(featureKey) {
+                const feature = features[featureKey];
+                featureTitle.textContent = feature.title;
+                featureText.textContent = feature.text;
+
+                 featureButtons.forEach(btn => {
+                    if (btn.dataset.feature === featureKey) {
+                        btn.classList.add('bg-orange-100');
+                    } else {
+                        btn.classList.remove('bg-orange-100');
+                    }
+                });
+            }
+
+            featureButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    updateFeatureContent(button.dataset.feature);
+                });
+            });
+
+            // Initialize with the first feature
+            updateFeatureContent('simplicity');
+        });
+    </script>
+</body>
+</html>
+
