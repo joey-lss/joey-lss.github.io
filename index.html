@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D14: Full Company Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Slate -->
+    <!-- Application Structure Plan: The SPA is redesigned around a primary tabbed navigation for the three core projects: Tactical, Strategic, and Moonshot. This structure allows investors to consume the plan in logical, self-contained stages while understanding the distinct goals and funding needs of each. The previous detailed content for The Phone is now nested within the 'Moonshot' tab. This architecture clearly communicates the multi-stage strategy, showing how immediate cash-flow (Tactical) supports proprietary product development (Strategic), which both pave the way for the high-margin hardware play (Moonshot). -->
+    <!-- Visualization & Content Choices: 
+        - Project Navigation -> Goal: Organize -> Viz: Tabbed Interface -> Interaction: Click to switch between project views -> Justification: The clearest way to present three parallel but interconnected business plans without overwhelming the user.
+        - Tactical (LSS) -> Goal: Inform -> Viz: Key Metrics Cards -> Interaction: Static display -> Justification: Quickly conveys the business model's core numbers ($1k fee, $500 CAC, instant profit).
+        - Strategic (AI) -> Goal: Inform -> Viz: Process Diagram (HTML/CSS) -> Interaction: Static display -> Justification: Visually explains the on-demand product creation flow.
+        - Moonshot (The Phone) -> Goal: Compare/Inform -> Viz: Donut Chart & Interactive Timeline -> Interaction: Hover on chart, click on timeline -> Justification: Re-uses the effective visualizations from the previous version to detail the long-term hardware plan.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .project-tab {
+            transition: all 0.3s;
+        }
+        .project-tab.active {
+            border-color: #f97316; /* orange-500 */
+            background-color: #fff;
+        }
+        .project-tab:not(.active) {
+             border-color: transparent;
+        }
+        .project-content {
+            display: none;
+        }
+        .project-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .timeline-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .timeline-item.active .timeline-item-content {
+            max-height: 500px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-slate-900">
+                D<span class="text-orange-500">14</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#strategy" class="font-medium text-slate-600 hover:text-orange-500 transition-colors">Our Strategy</a>
+                <a href="#projects" class="font-medium text-slate-600 hover:text-orange-500 transition-colors">The Projects</a>
+                <a href="#contact" class="font-medium text-slate-600 hover:text-orange-500 transition-colors">Contact</a>
+            </div>
+             <a href="mailto:j@longstory.sh" class="hidden md:block bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+                Contact Joe
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">From Marketplace to Moonshot.</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">D14 is a technology company with a three-stage plan to redefine consumer commerce and hardware: generating immediate cash flow, building a proprietary product engine, and achieving market dominance.</p>
+                <div class="mt-8">
+                    <a href="#projects" class="bg-slate-900 text-white font-bold py-3 px-6 rounded-lg hover:bg-slate-800 transition-colors">Explore The 3 Projects</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">A Three-Pronged Strategy for Success</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-3xl mx-auto">Our plan is designed to build a durable, massively profitable company by sequencing our initiatives. We start with immediate revenue, hedge with proprietary AI products, and aim for market leadership with high-margin hardware.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-green-500">
+                        <h3 class="text-2xl font-bold mb-2">1. Tactical</h3>
+                        <p class="font-semibold text-green-600 mb-3">Turn On Cash Flow</p>
+                        <p class="text-slate-600">Launch the Long Story Short (LSS) luxury marketplace to generate immediate, profitable revenue and build a high-value customer base from day one.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-blue-500">
+                        <h3 class="text-2xl font-bold mb-2">2. Strategic</h3>
+                        <p class="font-semibold text-blue-600 mb-3">Build a Moat</p>
+                        <p class="text-slate-600">Spin up an AI-powered on-demand manufacturing business for consumer goods, creating a proprietary product advantage that no competitor can replicate.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-orange-500">
+                        <h3 class="text-2xl font-bold mb-2">3. Moonshot</h3>
+                        <p class="font-semibold text-orange-600 mb-3">Own the Market</p>
+                        <p class="text-slate-600">Leverage our profits and brand to launch The Phone, a high-margin hardware device with a recurring subscription that redefines our business and challenges Apple directly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">The Projects</h2>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Click each tab to explore the details, goals, and synergies of our three core projects.</p>
+                </div>
+
+                <!-- Project Tabs -->
+                <div class="flex justify-center border-b mb-8">
+                    <button data-tab="tactical" class="project-tab active text-lg font-semibold py-3 px-6 border-b-2">
+                        1. Tactical
+                    </button>
+                    <button data-tab="strategic" class="project-tab text-lg font-semibold py-3 px-6 border-b-2">
+                        2. Strategic
+                    </button>
+                    <button data-tab="moonshot" class="project-tab text-lg font-semibold py-3 px-6 border-b-2">
+                        3. Moonshot
+                    </button>
+                </div>
+
+                <!-- Project Content -->
+                <div>
+                    <!-- Tactical Project -->
+                    <div id="tactical-content" class="project-content active">
+                        <div class="text-center">
+                             <h3 class="text-3xl font-bold text-green-600">Launch Long Story Short (LSS)</h3>
+                             <p class="text-lg mt-2 max-w-3xl mx-auto text-slate-600">Our immediate goal is to launch LSS, a proven, high-end marketplace that provides a curated selection of luxury goods to members for a $1,000/month fee. This provides instant revenue and a valuable customer list.</p>
+                        </div>
+                        <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h4 class="text-xl font-bold mb-4">The Ask: Working Capital</h4>
+                                <ul class="list-disc pl-5 space-y-3 text-slate-700">
+                                    <li><span class="font-semibold">Headcount Growth:</span> Expand our technical and white-glove customer service teams to support a premium user experience.</li>
+                                    <li><span class="font-semibold">Customer Acquisition:</span> Acquire our initial user base. At a $500 CAC against a $1,000 first payment, each new user is immediately profitable.</li>
+                                    <li><span class="font-semibold">NYC Office & Showroom:</span> Establish a physical presence in New York City to serve as our headquarters and an appointment-only showroom, generating buzz among celebrities and high-net-worth individuals.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-100 p-8 rounded-lg text-center">
+                                <h4 class="text-xl font-bold mb-4">Instant Profitability Model</h4>
+                                <div class="flex justify-around items-center">
+                                    <div class="text-center">
+                                        <p class="text-3xl font-bold text-red-600">-$500</p>
+                                        <p class="text-sm font-medium">Customer Acquisition Cost</p>
+                                    </div>
+                                    <div class="text-4xl font-light text-slate-400">+</div>
+                                     <div class="text-center">
+                                        <p class="text-3xl font-bold text-green-600">+$1,000</p>
+                                        <p class="text-sm font-medium">First Month Membership</p>
+                                    </div>
+                                </div>
+                                <div class="mt-6 border-t pt-4">
+                                     <p class="text-3xl font-bold text-green-600">+$500</p>
+                                        <p class="text-sm font-medium">Gross Profit on Day One</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Strategic Project -->
+                    <div id="strategic-content" class="project-content">
+                         <div class="text-center">
+                             <h3 class="text-3xl font-bold text-blue-600">AI-Powered Products On-Demand</h3>
+                             <p class="text-lg mt-2 max-w-3xl mx-auto text-slate-600">Our strategic initiative is to build a proprietary product engine. We will use AI to design and manufacture unique consumer goods on demand, starting with clothing and toys. This hedges our marketplace dependence and provides exclusive products for LSS.</p>
+                        </div>
+                        <div class="mt-12 p-8 bg-slate-100 rounded-lg">
+                            <h4 class="text-xl font-bold mb-6 text-center">The On-Demand Flow</h4>
+                            <div class="flex flex-col md:flex-row justify-around items-center text-center space-y-6 md:space-y-0 md:space-x-6">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">🤖</div>
+                                    <p class="font-bold mt-2">1. AI Design</p>
+                                    <p class="text-sm text-slate-600">Models generate unique designs based on trends.</p>
+                                </div>
+                                <div class="font-bold text-2xl text-slate-400">→</div>
+                                <div class="flex flex-col items-center">
+                                    <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">👕</div>
+                                    <p class="font-bold mt-2">2. On-Demand Mfg.</p>
+                                    <p class="text-sm text-slate-600">Products are made only after being ordered.</p>
+                                </div>
+                                <div class="font-bold text-2xl text-slate-400">→</div>
+                                <div class="flex flex-col items-center">
+                                     <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">📦</div>
+                                    <p class="font-bold mt-2">3. Direct Shipping</p>
+                                    <p class="text-sm text-slate-600">No inventory risk, shipped directly to consumer.</p>
+                                </div>
+                                <div class="font-bold text-2xl text-slate-400">→</div>
+                                 <div class="flex flex-col items-center">
+                                     <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">✨</div>
+                                    <p class="font-bold mt-2">4. Exclusive SKUs</p>
+                                    <p class="text-sm text-slate-600">Unique products for our LSS marketplace.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Moonshot Project -->
+                    <div id="moonshot-content" class="project-content">
+                         <div class="text-center">
+                             <h3 class="text-3xl font-bold text-orange-600">The Moonshot: The Phone</h3>
+                             <p class="text-lg mt-2 max-w-3xl mx-auto text-slate-600">This is our ultimate goal: leveraging our brand and cash flow to compete with Apple. The Phone is not just a device; it's a high-margin, vertically integrated business that dramatically increases profitability and customer retention through its bundled MVNO service.</p>
+                        </div>
+                        <div class="mt-8">
+                             <!-- This content is reused and adapted from the previous version -->
+                             <section id="product-moonshot" class="py-12">
+                                 <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                                     <div class="grid md:grid-cols-3 gap-12">
+                                         <div class="md:col-span-1 flex flex-col items-center text-center">
+                                             <div class="w-48 h-96 bg-slate-100 rounded-3xl shadow-2xl flex flex-col p-4">
+                                                 <div class="flex-grow flex flex-col items-center justify-center text-slate-800">
+                                                     <div class="text-4xl mb-4">📞</div>
+                                                     <p class="font-semibold">Incoming Call...</p>
+                                                     <p class="text-2xl font-bold mt-2">(479) 273-4000</p>
+                                                 </div>
+                                                 <div class="flex justify-around items-center w-full mt-4">
+                                                     <button class="w-16 h-16 bg-red-500 text-white text-3xl rounded-full flex items-center justify-center shadow-lg">❌</button>
+                                                     <button class="w-16 h-16 bg-green-500 text-white text-3xl rounded-full flex items-center justify-center shadow-lg">✔️</button>
+                                                 </div>
+                                             </div>
+                                             <h3 class="text-2xl font-bold mt-6">The Phone</h3>
+                                             <p class="text-slate-500">Generation 1</p>
+                                         </div>
+                                         <div id="feature-display" class="md:col-span-2">
+                                             <div class="space-y-4">
+                                                 <button data-feature="simplicity" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📱 Elegant Simplicity</button>
+                                                 <button data-feature="security" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🛡️ Uncompromising Security & Privacy</button>
+                                                 <button data-feature="madeinusa" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🇺🇸 Made & Supported in America</button>
+                                                 <button data-feature="mvno" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📡 MVNO for a Seamless Experience</button>
+                                             </div>
+                                             <div id="feature-content" class="mt-6 p-6 bg-slate-100 rounded-lg min-h-[120px]">
+                                                 <h4 id="feature-title" class="text-xl font-bold text-slate-900"></h4>
+                                                 <p id="feature-text" class="mt-2 text-slate-700"></p>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </section>
+                             <section id="plan-moonshot" class="py-12">
+                                 <div class="grid lg:grid-cols-5 gap-12 items-center">
+                                     <div class="lg:col-span-3">
+                                         <h3 class="text-2xl font-bold mb-8 text-center lg:text-left">12-Month, $20M Go-to-Market Plan</h3>
+                                         <div class="relative pl-8 border-l-2 border-slate-200">
+                                             <div class="timeline-item mb-8 cursor-pointer">
+                                                 <div class="timeline-circle absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full transition-colors"></div>
+                                                 <h4 class="text-xl font-bold ml-4">Months 1-3: Foundation & Design</h4>
+                                                 <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                                     <ul class="list-disc pl-5 space-y-1">
+                                                        <li>Finalize core leadership team of 20 professionals.</li>
+                                                        <li>Establish key hardware partnerships and U.S. supply chain.</li>
+                                                        <li>Lock industrial design, CMF, and core UX.</li>
+                                                        <li>Begin development of D14's customized Android OS layer.</li>
+                                                     </ul>
+                                                 </div>
+                                             </div>
+                                             <div class="timeline-item mb-8 cursor-pointer">
+                                                 <div class="timeline-circle absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full transition-colors"></div>
+                                                 <h4 class="text-xl font-bold ml-4">Months 4-6: Prototyping & Engineering</h4>
+                                                 <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                                     <ul class="list-disc pl-5 space-y-1">
+                                                        <li>First hardware prototype assembly and testing (EVT).</li>
+                                                        <li>Core software integration with hardware components.</li>
+                                                        <li>Finalize MVNO agreements and build backend infrastructure.</li>
+                                                     </ul>
+                                                 </div>
+                                             </div>
+                                             <div class="timeline-item mb-8 cursor-pointer">
+                                                 <div class="timeline-circle absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full transition-colors"></div>
+                                                 <h4 class="text-xl font-bold ml-4">Months 7-9: Refinement & Pre-Production</h4>
+                                                 <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                                     <ul class="list-disc pl-5 space-y-1">
+                                                        <li>Build and test production-ready prototypes (DVT).</li>
+                                                        <li>Begin FCC and carrier certification processes.</li>
+                                                        <li>Initiate small-scale U.S. manufacturing runs (PVT).</li>
+                                                     </ul>
+                                                 </div>
+                                             </div>
+                                             <div class="timeline-item cursor-pointer">
+                                                  <div class="timeline-circle absolute -left-4 top-1 w-8 h-8 bg-white border-4 border-slate-300 rounded-full transition-colors"></div>
+                                                 <h4 class="text-xl font-bold ml-4">Months 10-12: Production & Launch</h4>
+                                                 <div class="timeline-item-content ml-4 mt-2 text-slate-600">
+                                                      <ul class="list-disc pl-5 space-y-1">
+                                                         <li>Scale to full manufacturing production.</li>
+                                                         <li>Execute pre-launch marketing campaign and open pre-orders.</li>
+                                                         <li>Official launch of The Phone and the D14 MVNO service.</li>
+                                                      </ul>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="lg:col-span-2">
+                                         <h3 class="text-2xl font-bold mb-6 text-center">Budget Allocation</h3>
+                                         <div class="chart-container">
+                                             <canvas id="budgetChart"></canvas>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section id="contact" class="bg-slate-900 text-white py-20 md:py-24">
+             <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold">Join Us in Cooking Up the Future.</h2>
+                 <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">D14 is positioned to become the most significant new player in consumer technology. We have the vision, plan, and philosophy to build a better alternative. We invite you to be a part of it.</p>
+                  <div class="mt-8">
+                    <a href="mailto:j@longstory.sh" class="bg-orange-500 text-white font-bold py-4 px-8 rounded-lg hover:bg-orange-600 transition-colors text-lg">Contact Joe</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white py-6">
+        <div class="container mx-auto px-6 text-center text-slate-500">
+            <p>&copy; 2025 D14. All Rights Reserved. Built in the USA.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Main Project Tabs
+            const tabs = document.querySelectorAll('.project-tab');
+            const contents = document.querySelectorAll('.project-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    contents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+                });
+            });
+
+            // Budget Chart
+            const budgetChartCanvas = document.getElementById('budgetChart');
+            if (budgetChartCanvas) {
+                const ctx = budgetChartCanvas.getContext('2d');
+                const budgetData = {
+                    labels: [
+                        'Team & Operations ($6M)',
+                        'Hardware R&D & Components ($7M)',
+                        'Software Development ($3M)',
+                        'U.S. Manufacturing ($2M)',
+                        'Marketing, MVNO & Launch ($2M)'
+                    ],
+                    datasets: [{
+                        label: 'Budget Allocation',
+                        data: [6, 7, 3, 2, 2],
+                        backgroundColor: [
+                            '#fb923c', '#f97316', '#ea580c', '#c2410c', '#9a3412'
+                        ],
+                        borderColor: '#f8f9fa',
+                        borderWidth: 4,
+                        hoverOffset: 12
+                    }]
+                };
+
+                const budgetChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: budgetData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed !== null) { label += '$' + context.parsed + 'M'; }
+                                        return label;
+                                    }
+                                },
+                                backgroundColor: '#1e293b', titleFont: { size: 14, weight: 'bold' },
+                                bodyFont: { size: 12 }, padding: 12, cornerRadius: 8, displayColors: false,
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+
+                let tooltipInterval;
+                let activeIndex = 0;
+                const startTooltipAnimation = () => {
+                    tooltipInterval = setInterval(() => {
+                        let tooltip = budgetChart.tooltip;
+                        if (tooltip.getActiveElements().length > 0) {
+                            tooltip.setActiveElements([], { x: 0, y: 0 });
+                        }
+                        tooltip.setActiveElements([{ datasetIndex: 0, index: activeIndex }], { x: 0, y: 0 });
+                        budgetChart.update();
+                        activeIndex = (activeIndex + 1) % budgetData.datasets[0].data.length;
+                    }, 2000);
+                };
+                const stopTooltipAnimation = () => {
+                    clearInterval(tooltipInterval);
+                     budgetChart.tooltip.setActiveElements([], { x: 0, y: 0 });
+                     budgetChart.update();
+                };
+                budgetChartCanvas.addEventListener('mouseenter', stopTooltipAnimation);
+                budgetChartCanvas.addEventListener('mouseleave', startTooltipAnimation);
+                startTooltipAnimation();
+            }
+
+            // Moonshot - Interactive Timeline
+            const timelineItems = document.querySelectorAll('#moonshot-content .timeline-item');
+            
+            const activateTimelineItem = (activeIndex) => {
+                 timelineItems.forEach((item, index) => {
+                    const circle = item.querySelector('.timeline-circle');
+                    if (index === activeIndex) {
+                        item.classList.add('active');
+                        circle.classList.add('bg-orange-500', 'border-orange-500');
+                        circle.classList.remove('border-slate-300');
+                    } else {
+                        item.classList.remove('active');
+                        circle.classList.remove('bg-orange-500', 'border-orange-500');
+                        circle.classList.add('border-slate-300');
+                    }
+                });
+            }
+
+            timelineItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    activateTimelineItem(index);
+                });
+            });
+
+            if (timelineItems.length > 0) {
+                activateTimelineItem(0);
+            }
+            
+            // Moonshot - Product Features
+            const featureButtons = document.querySelectorAll('#moonshot-content .feature-btn');
+            const featureTitle = document.querySelector('#moonshot-content #feature-title');
+            const featureText = document.querySelector('#moonshot-content #feature-text');
+            
+            const features = {
+                simplicity: {
+                    title: 'Elegant Simplicity',
+                    text: 'Hardware is crafted from premium, durable materials like titanium and ceramic, designed for longevity and repairability. The custom Android OS is stripped of all bloatware, offering a clean, intuitive user experience focused on core communication and productivity tasks.'
+                },
+                security: {
+                    title: 'Uncompromising Security & Privacy',
+                    text: 'Features a hardware-level security chip and a secure boot process to ensure integrity from the ground up. All user data through our MVNO is routed through U.S.-based servers under strict privacy guidelines. We collect only what is essential to provide service, and we never sell user data.'
+                },
+                madeinusa: {
+                    title: 'Made & Supported in America',
+                    text: 'We are partnering with U.S. suppliers for key components, including the SoC and display. Final assembly, quality control, and all customer support are based exclusively in the United States, creating local jobs and ensuring unparalleled oversight.'
+                },
+                mvno: {
+                    title: 'MVNO for a Seamless Experience',
+                    text: 'Our own mobile network provides simple, transparent plans with no hidden fees. Customer support is handled by highly trained, U.S.-based D14 employees, not outsourced call centers. This integration provides a secure, reliable connection optimized for The Phone.'
+                }
+            };
+            
+            function updateFeatureContent(featureKey) {
+                const feature = features[featureKey];
+                if (featureTitle && featureText) {
+                    featureTitle.textContent = feature.title;
+                    featureText.textContent = feature.text;
+                }
+                 featureButtons.forEach(btn => {
+                    if (btn.dataset.feature === featureKey) {
+                        btn.classList.add('bg-orange-100');
+                    } else {
+                        btn.classList.remove('bg-orange-100');
+                    }
+                });
+            }
+
+            featureButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    updateFeatureContent(button.dataset.feature);
+                });
+            });
+
+            if (featureButtons.length > 0) {
+                 updateFeatureContent('simplicity');
+            }
+        });
+    </script>
+</body>
+</html>
+
