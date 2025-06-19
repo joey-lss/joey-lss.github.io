@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D14: Full Company Proposal</title>
+    <title>D14</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals & Slate -->
-    <!-- Application Structure Plan: The SPA is redesigned around a primary tabbed navigation for the three core projects: Tactical, Strategic, and Moonshot. This structure allows investors to consume the plan in logical, self-contained stages while understanding the distinct goals and funding needs of each. The previous detailed content for The Phone is now nested within the 'Moonshot' tab. This architecture clearly communicates the multi-stage strategy, showing how immediate cash-flow (Tactical) supports proprietary product development (Strategic), which both pave the way for the high-margin hardware play (Moonshot). -->
+    <!-- Application Structure Plan: The SPA is redesigned to show all three projects (Tactical, Strategic, Moonshot) sequentially on the main page, removing the tabbed interface. This layout provides a comprehensive, top-down view of the entire business plan at a glance, emphasizing how the stages build on each other. The color-coded sections visually differentiate the projects, guiding the user through the narrative flow from immediate revenue to the ultimate hardware goal. -->
     <!-- Visualization & Content Choices: 
-        - Project Navigation -> Goal: Organize -> Viz: Tabbed Interface -> Interaction: Click to switch between project views -> Justification: The clearest way to present three parallel but interconnected business plans without overwhelming the user.
         - Tactical (LSS) -> Goal: Inform -> Viz: Key Metrics Cards -> Interaction: Static display -> Justification: Quickly conveys the business model's core numbers ($1k fee, $500 CAC, instant profit).
         - Strategic (AI) -> Goal: Inform -> Viz: Process Diagram (HTML/CSS) -> Interaction: Static display -> Justification: Visually explains the on-demand product creation flow.
-        - Moonshot (The Phone) -> Goal: Compare/Inform -> Viz: Donut Chart & Interactive Timeline -> Interaction: Hover on chart, click on timeline -> Justification: Re-uses the effective visualizations from the previous version to detail the long-term hardware plan.
+        - Moonshot (The Phone) -> Goal: Compare/Inform -> Viz: Donut Chart & Interactive Timeline -> Interaction: Hover on chart, click on timeline -> Justification: The interactive elements are preserved within this section to allow for deep exploration of the most complex project.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -38,26 +37,11 @@
                 height: 400px;
             }
         }
-        .project-tab {
-            transition: all 0.3s;
+        .nav-link {
+            transition: color 0.3s;
         }
-        .project-tab.active {
-            border-color: #f97316; /* orange-500 */
-            background-color: #fff;
-        }
-        .project-tab:not(.active) {
-             border-color: transparent;
-        }
-        .project-content {
-            display: none;
-        }
-        .project-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .nav-link:hover {
+            color: #fd7e14;
         }
         .timeline-item-content {
             max-height: 0;
@@ -66,6 +50,13 @@
         }
         .timeline-item.active .timeline-item-content {
             max-height: 500px; /* Adjust as needed */
+        }
+        .project-section {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -126,31 +117,19 @@
 
         <section id="projects" class="py-20 md:py-24 bg-white">
             <div class="container mx-auto px-6">
-                 <div class="text-center mb-12">
+                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold">The Projects</h2>
-                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Click each tab to explore the details, goals, and synergies of our three core projects.</p>
+                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Our three-stage plan is designed for maximum impact, balancing immediate returns with long-term, market-defining ambition.</p>
                 </div>
 
-                <!-- Project Tabs -->
-                <div class="flex justify-center border-b mb-8">
-                    <button data-tab="tactical" class="project-tab active text-lg font-semibold py-3 px-6 border-b-2">
-                        1. Tactical
-                    </button>
-                    <button data-tab="strategic" class="project-tab text-lg font-semibold py-3 px-6 border-b-2">
-                        2. Strategic
-                    </button>
-                    <button data-tab="moonshot" class="project-tab text-lg font-semibold py-3 px-6 border-b-2">
-                        3. Moonshot
-                    </button>
-                </div>
+                <!-- Projects Display -->
+                <div class="space-y-20">
 
-                <!-- Project Content -->
-                <div>
                     <!-- Tactical Project -->
-                    <div id="tactical-content" class="project-content active">
-                        <div class="text-center">
-                             <h3 class="text-3xl font-bold text-green-600">Launch Long Story Short (LSS)</h3>
-                             <p class="text-lg mt-2 max-w-3xl mx-auto text-slate-600">Our immediate goal is to launch LSS, a proven, high-end marketplace that provides a curated selection of luxury goods to members for a $1,000/month fee. This provides instant revenue and a valuable customer list.</p>
+                    <div id="tactical-project" class="project-section p-8 rounded-xl border-l-8 border-green-500 bg-slate-50">
+                        <div class="text-center md:text-left">
+                             <h3 class="text-3xl font-bold text-green-600">Project 1 (Tactical): Launch Long Story Short</h3>
+                             <p class="text-lg mt-2 max-w-4xl text-slate-600">Our immediate goal is to launch LSS, a high-end marketplace for luxury goods. This is more than a store; it's a two-sided network. We onboard a profitable, eclectic global clientele paying a $1,000/month fee, while simultaneously attracting the world's most prestigious brands, giving them a unique channel to a high-value audience.</p>
                         </div>
                         <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
                             <div>
@@ -158,10 +137,10 @@
                                 <ul class="list-disc pl-5 space-y-3 text-slate-700">
                                     <li><span class="font-semibold">Headcount Growth:</span> Expand our technical and white-glove customer service teams to support a premium user experience.</li>
                                     <li><span class="font-semibold">Customer Acquisition:</span> Acquire our initial user base. At a $500 CAC against a $1,000 first payment, each new user is immediately profitable.</li>
-                                    <li><span class="font-semibold">NYC Office & Showroom:</span> Establish a physical presence in New York City to serve as our headquarters and an appointment-only showroom, generating buzz among celebrities and high-net-worth individuals.</li>
+                                    <li><span class="font-semibold">NYC Office & Showroom:</span> Establish a physical presence in New York City to serve as our headquarters and an appointment-only showroom for V-VIPs and press.</li>
                                 </ul>
                             </div>
-                            <div class="bg-slate-100 p-8 rounded-lg text-center">
+                            <div class="bg-white p-8 rounded-lg text-center shadow">
                                 <h4 class="text-xl font-bold mb-4">Instant Profitability Model</h4>
                                 <div class="flex justify-around items-center">
                                     <div class="text-center">
@@ -183,33 +162,33 @@
                     </div>
                     
                     <!-- Strategic Project -->
-                    <div id="strategic-content" class="project-content">
-                         <div class="text-center">
-                             <h3 class="text-3xl font-bold text-blue-600">AI-Powered Products On-Demand</h3>
-                             <p class="text-lg mt-2 max-w-3xl mx-auto text-slate-600">Our strategic initiative is to build a proprietary product engine. We will use AI to design and manufacture unique consumer goods on demand, starting with clothing and toys. This hedges our marketplace dependence and provides exclusive products for LSS.</p>
+                    <div id="strategic-project" class="project-section p-8 rounded-xl border-l-8 border-blue-500 bg-slate-50">
+                         <div class="text-center md:text-left">
+                             <h3 class="text-3xl font-bold text-blue-600">Project 2 (Strategic): AI-Powered Products On-Demand</h3>
+                             <p class="text-lg mt-2 max-w-4xl text-slate-600">Our strategic initiative is to build a proprietary product engine. We will use AI to design and manufacture unique consumer goods on demand, starting with clothing and toys. This hedges our marketplace dependence, provides exclusive products for LSS, and creates a defensible technology moat.</p>
                         </div>
-                        <div class="mt-12 p-8 bg-slate-100 rounded-lg">
+                        <div class="mt-12 p-8 bg-white rounded-lg shadow">
                             <h4 class="text-xl font-bold mb-6 text-center">The On-Demand Flow</h4>
                             <div class="flex flex-col md:flex-row justify-around items-center text-center space-y-6 md:space-y-0 md:space-x-6">
-                                <div class="flex flex-col items-center">
+                                <div class="flex flex-col items-center max-w-40">
                                     <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">🤖</div>
                                     <p class="font-bold mt-2">1. AI Design</p>
                                     <p class="text-sm text-slate-600">Models generate unique designs based on trends.</p>
                                 </div>
                                 <div class="font-bold text-2xl text-slate-400">→</div>
-                                <div class="flex flex-col items-center">
+                                <div class="flex flex-col items-center max-w-40">
                                     <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">👕</div>
                                     <p class="font-bold mt-2">2. On-Demand Mfg.</p>
                                     <p class="text-sm text-slate-600">Products are made only after being ordered.</p>
                                 </div>
                                 <div class="font-bold text-2xl text-slate-400">→</div>
-                                <div class="flex flex-col items-center">
+                                <div class="flex flex-col items-center max-w-40">
                                      <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">📦</div>
                                     <p class="font-bold mt-2">3. Direct Shipping</p>
                                     <p class="text-sm text-slate-600">No inventory risk, shipped directly to consumer.</p>
                                 </div>
                                 <div class="font-bold text-2xl text-slate-400">→</div>
-                                 <div class="flex flex-col items-center">
+                                 <div class="flex flex-col items-center max-w-40">
                                      <div class="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center text-3xl">✨</div>
                                     <p class="font-bold mt-2">4. Exclusive SKUs</p>
                                     <p class="text-sm text-slate-600">Unique products for our LSS marketplace.</p>
@@ -219,15 +198,15 @@
                     </div>
 
                     <!-- Moonshot Project -->
-                    <div id="moonshot-content" class="project-content">
-                         <div class="text-center">
-                             <h3 class="text-3xl font-bold text-orange-600">The Moonshot: The Phone</h3>
-                             <p class="text-lg mt-2 max-w-3xl mx-auto text-slate-600">This is our ultimate goal: leveraging our brand and cash flow to compete with Apple. The Phone is not just a device; it's a high-margin, vertically integrated business that dramatically increases profitability and customer retention through its bundled MVNO service.</p>
+                    <div id="moonshot-project" class="project-section p-8 rounded-xl border-l-8 border-orange-500 bg-slate-50">
+                         <div class="text-center md:text-left">
+                             <h3 class="text-3xl font-bold text-orange-600">Project 3 (Moonshot): The Phone</h3>
+                             <p class="text-lg mt-2 max-w-4xl text-slate-600">This is our ultimate goal: leveraging our brand and cash flow to compete with Apple. The Phone is not just a device; it's a high-margin, vertically integrated business that dramatically increases profitability and customer retention through its bundled MVNO service.</p>
                         </div>
                         <div class="mt-8">
                              <!-- This content is reused and adapted from the previous version -->
                              <section id="product-moonshot" class="py-12">
-                                 <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                                 <div class="bg-white rounded-xl shadow p-8 md:p-12">
                                      <div class="grid md:grid-cols-3 gap-12">
                                          <div class="md:col-span-1 flex flex-col items-center text-center">
                                              <div class="w-48 h-96 bg-slate-100 rounded-3xl shadow-2xl flex flex-col p-4">
@@ -246,12 +225,12 @@
                                          </div>
                                          <div id="feature-display" class="md:col-span-2">
                                              <div class="space-y-4">
-                                                 <button data-feature="simplicity" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📱 Elegant Simplicity</button>
-                                                 <button data-feature="security" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🛡️ Uncompromising Security & Privacy</button>
-                                                 <button data-feature="madeinusa" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🇺🇸 Made & Supported in America</button>
-                                                 <button data-feature="mvno" class="feature-btn w-full text-left p-4 bg-slate-50 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📡 MVNO for a Seamless Experience</button>
+                                                 <button data-feature="simplicity" class="feature-btn w-full text-left p-4 bg-slate-200 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📱 Elegant Simplicity</button>
+                                                 <button data-feature="security" class="feature-btn w-full text-left p-4 bg-slate-200 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🛡️ Uncompromising Security & Privacy</button>
+                                                 <button data-feature="madeinusa" class="feature-btn w-full text-left p-4 bg-slate-200 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">🇺🇸 Made & Supported in America</button>
+                                                 <button data-feature="mvno" class="feature-btn w-full text-left p-4 bg-slate-200 rounded-lg font-bold text-lg hover:bg-orange-100 focus:bg-orange-100 focus:outline-none transition-colors">📡 MVNO for a Seamless Experience</button>
                                              </div>
-                                             <div id="feature-content" class="mt-6 p-6 bg-slate-100 rounded-lg min-h-[120px]">
+                                             <div id="feature-content" class="mt-6 p-6 bg-slate-200 rounded-lg min-h-[120px]">
                                                  <h4 id="feature-title" class="text-xl font-bold text-slate-900"></h4>
                                                  <p id="feature-text" class="mt-2 text-slate-700"></p>
                                              </div>
@@ -259,7 +238,7 @@
                                      </div>
                                  </div>
                              </section>
-                             <section id="plan-moonshot" class="py-12">
+                             <section id="plan-moonshot" class="pt-12">
                                  <div class="grid lg:grid-cols-5 gap-12 items-center">
                                      <div class="lg:col-span-3">
                                          <h3 class="text-2xl font-bold mb-8 text-center lg:text-left">12-Month, $20M Go-to-Market Plan</h3>
@@ -344,22 +323,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Main Project Tabs
-            const tabs = document.querySelectorAll('.project-tab');
-            const contents = document.querySelectorAll('.project-content');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-
-                    contents.forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    document.getElementById(tab.dataset.tab + '-content').classList.add('active');
-                });
-            });
-
             // Budget Chart
             const budgetChartCanvas = document.getElementById('budgetChart');
             if (budgetChartCanvas) {
@@ -433,7 +396,7 @@
             }
 
             // Moonshot - Interactive Timeline
-            const timelineItems = document.querySelectorAll('#moonshot-content .timeline-item');
+            const timelineItems = document.querySelectorAll('#moonshot-project .timeline-item');
             
             const activateTimelineItem = (activeIndex) => {
                  timelineItems.forEach((item, index) => {
@@ -461,9 +424,9 @@
             }
             
             // Moonshot - Product Features
-            const featureButtons = document.querySelectorAll('#moonshot-content .feature-btn');
-            const featureTitle = document.querySelector('#moonshot-content #feature-title');
-            const featureText = document.querySelector('#moonshot-content #feature-text');
+            const featureButtons = document.querySelectorAll('#moonshot-project .feature-btn');
+            const featureTitle = document.querySelector('#moonshot-project #feature-title');
+            const featureText = document.querySelector('#moonshot-project #feature-text');
             
             const features = {
                 simplicity: {
