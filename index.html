@@ -134,7 +134,7 @@
                         <p class="mt-2 text-gray-600">We get ahead of market shifts by building a proprietary product engine inside SC. Using AI, we'll design and manufacture unique goods on demand, providing an infinite, exclusive inventory for SC's marketplace.</p>
                         <div class="mt-6 bg-white/50 p-6 rounded-lg border border-gray-200">
                              <h4 class="font-lora font-bold text-xl mb-6 text-center">The On-Demand Flow for SC</h4>
-                            <div class="flex flex-col md:flex-row justify-around items-start text-center space-y-6 md:space-y-0 md:space-x-4">
+                            <div class="flex flex-col md:flex-row justify-around items-center text-center space-y-6 md:space-y-0 md:space-x-4">
                                 <div class="flex flex-col items-center max-w-48"><div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-3xl mb-2">🤖</div><p class="font-bold">1. AI Design</p><p class="text-sm text-gray-600">Models generate unique designs integrated into SC's app.</p></div>
                                 <div class="font-bold text-2xl text-gray-300 mt-6 hidden md:block">→</div>
                                 <div class="flex flex-col items-center max-w-48"><div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-3xl mb-2">👕</div><p class="font-bold">2. On-Demand Mfg.</p><p class="text-sm text-gray-600">Products made only after an SC member places an order.</p></div>
@@ -212,25 +212,60 @@
             const budgetChartCanvas = document.getElementById('budgetChart');
             if (budgetChartCanvas) {
                 const ctx = budgetChartCanvas.getContext('2d');
-                new Chart(ctx, {
+                const budgetData = {
+                    labels: ['Team ($6M)', 'Hardware ($7M)', 'Software ($3M)', 'Mfg. ($2M)', 'Launch ($2M)'],
+                    datasets: [{
+                        data: [6, 7, 3, 2, 2],
+                        backgroundColor: ['#D4AF37', '#E5C16C', '#C49B28', '#A4811C', '#856710'],
+                        borderColor: '#FDF8F0',
+                        borderWidth: 4,
+                        hoverOffset: 12
+                    }]
+                };
+                const budgetChart = new Chart(ctx, {
                     type: 'doughnut',
-                    data: {
-                        labels: ['Team ($6M)', 'Hardware ($7M)', 'Software ($3M)', 'Mfg. ($2M)', 'Launch ($2M)'],
-                        datasets: [{
-                            data: [6, 7, 3, 2, 2],
-                            backgroundColor: ['#D4AF37', '#E5C16C', '#C49B28', '#A4811C', '#856710'],
-                            borderColor: '#FDF8F0',
-                            borderWidth: 4,
-                            hoverOffset: 12
-                        }]
-                    },
+                    data: budgetData,
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed !== null) { label += '$' + context.parsed + 'M'; }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
                         cutout: '60%'
                     }
                 });
+
+                let tooltipInterval;
+                let activeIndex = 0;
+                const startTooltipAnimation = () => {
+                    tooltipInterval = setInterval(() => {
+                        let tooltip = budgetChart.tooltip;
+                        if (tooltip.getActiveElements().length > 0) {
+                            tooltip.setActiveElements([], { x: 0, y: 0 });
+                        }
+                        tooltip.setActiveElements([{ datasetIndex: 0, index: activeIndex }], { x: 0, y: 0 });
+                        budgetChart.update();
+                        activeIndex = (activeIndex + 1) % budgetData.datasets[0].data.length;
+                    }, 2500);
+                };
+                const stopTooltipAnimation = () => {
+                    clearInterval(tooltipInterval);
+                     budgetChart.tooltip.setActiveElements([], { x: 0, y: 0 });
+                     budgetChart.update();
+                };
+                budgetChartCanvas.addEventListener('mouseenter', stopTooltipAnimation);
+                budgetChartCanvas.addEventListener('mouseleave', startTooltipAnimation);
+                startTooltipAnimation();
             }
 
             // Moonshot - Interactive Timeline
